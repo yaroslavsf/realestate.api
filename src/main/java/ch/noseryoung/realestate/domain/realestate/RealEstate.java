@@ -1,6 +1,5 @@
 package ch.noseryoung.realestate.domain.realestate;
 
-import ch.noseryoung.realestate.domain.eums.RealEstateStatus;
 import ch.noseryoung.realestate.domain.userrealestate.UserRealEstate;
 import ch.noseryoung.realestate.domain.users.User;
 import jakarta.persistence.*;
@@ -36,7 +35,7 @@ public class RealEstate {
     private User user;
 
     @OneToMany(
-            mappedBy = "realestate",
+            mappedBy = "realEstate",
             cascade = CascadeType.ALL
     )
     private List<UserRealEstate> userRealEstates;

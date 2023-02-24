@@ -1,4 +1,4 @@
-package ch.noseryoung.realestate.domain.eums;
+package ch.noseryoung.realestate.domain.enums;
 
 public enum RealEstateStatus {
     ACCEPTED,
