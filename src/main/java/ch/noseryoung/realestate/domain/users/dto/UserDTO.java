@@ -1,6 +1,7 @@
 package ch.noseryoung.realestate.domain.users.dto;
 
 
+import ch.noseryoung.realestate.core.validation.email.Email;
 import ch.noseryoung.realestate.domain.role.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ public class UserDTO {
 //    @Alphabetical
     private String name;
     private String surname;
+    @Email
     private String email;
     @Getter
     @Setter

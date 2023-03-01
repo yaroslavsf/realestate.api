@@ -3,6 +3,7 @@ package ch.noseryoung.realestate.domain.users;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.dto.UserDTO;
 import ch.noseryoung.realestate.domain.users.dto.UserMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO.RetrieveLightlyDressed> create(@RequestBody UserDTO.Register registerUser) {
+    public ResponseEntity<UserDTO.RetrieveLightlyDressed> create(@Valid @RequestBody UserDTO.Register registerUser) {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.register(userMapper.fromRegisterDTO(registerUser))), HttpStatus.CREATED);
     }
 
