@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean checkEmailForAgentPattern(String email, String pattern) {
-        return true; //TODO validate agent check
+        Pattern p = Pattern.compile(pattern + "$");
+        Matcher matcher = p.matcher(email);
+
+        return matcher.find();
     }
 }

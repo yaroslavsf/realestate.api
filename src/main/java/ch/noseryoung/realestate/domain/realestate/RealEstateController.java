@@ -13,4 +13,6 @@ public class RealEstateController {
     public RealEstateController(RealEstateService realEstateService) {
         this.realEstateService = realEstateService;
     }
+
+
 }

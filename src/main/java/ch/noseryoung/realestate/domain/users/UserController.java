@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +25,11 @@ public class UserController {
     }
 
     @GetMapping("/get_all")
-    public ResponseEntity<List<User>> retrieveAll() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> retrieveAll() {
+        List<User> users = userService.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        users.forEach(user -> userDTOS.add(userMapper.toDTO(user)));
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
     @PostMapping("/register")
