@@ -33,6 +33,10 @@ public class UserController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/get_by_id/{id}")
+    public ResponseEntity<UserDTO.RetrieveLightlyDressed> retrieveById(@PathVariable(value="id") UUID id) {
+        return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.findById(id)), HttpStatus.OK);
+    }
     @PostMapping("/register")
     public ResponseEntity<UserDTO.RetrieveLightlyDressed> create(@Valid @RequestBody UserDTO.Register registerUser) {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.register(userMapper.fromRegisterDTO(registerUser))), HttpStatus.CREATED);

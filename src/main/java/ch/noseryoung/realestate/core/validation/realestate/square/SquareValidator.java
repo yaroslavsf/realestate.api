@@ -1,4 +1,4 @@
-package ch.noseryoung.realestate.core.validation.email;
+package ch.noseryoung.realestate.core.validation.realestate.square;
 
 
 import jakarta.validation.ConstraintValidator;
@@ -6,13 +6,13 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailValidator implements ConstraintValidator<Email, String> {
+public class SquareValidator implements ConstraintValidator<Square, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return false;
         }
 
-        return value.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        return value.matches("\\d*");
     }
 }
