@@ -1,5 +1,6 @@
 package ch.noseryoung.realestate.domain.users;
 
+import ch.noseryoung.realestate.core.audit.Auditable;
 import ch.noseryoung.realestate.domain.realestate.RealEstate;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.userrealestate.UserRealEstate;
@@ -7,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User extends Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @Column(name = "user_id", nullable = false)
