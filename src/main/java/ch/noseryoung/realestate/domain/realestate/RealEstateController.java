@@ -2,10 +2,13 @@ package ch.noseryoung.realestate.domain.realestate;
 
 import ch.noseryoung.realestate.domain.realestate.dto.RealEstateDTO;
 import ch.noseryoung.realestate.domain.realestate.dto.RealEstateMapper;
+import ch.noseryoung.realestate.domain.realestate.dto.filter.CantonDTO;
+import ch.noseryoung.realestate.domain.realestate.dto.filter.NameDTO;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.User;
 import ch.noseryoung.realestate.domain.users.UserService;
 import jakarta.validation.Valid;
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,4 +69,21 @@ public class RealEstateController {
         return new ResponseEntity<>(realEstateMapper.toRetrieveFullyDressedDTO(realEstateService.update(realEstateMapper.fromDTO(realEstateDTO), realestate_id)), HttpStatus.OK);
     }
 
+    @PostMapping("/search/by/canton")
+    public ResponseEntity<List<RealEstateDTO>> searchByCanton(@Valid @RequestBody CantonDTO cantonDTO) {
+        String canton_criteria = cantonDTO.getCanton();
+        List<RealEstate> foundRealEstates = realEstateService.searchByCanton(canton_criteria);
+        List<RealEstateDTO> resultToReturn = new ArrayList<>();
+        foundRealEstates.forEach(realEstate -> resultToReturn.add(realEstateMapper.toDTO(realEstate)));
+        return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
+    }
+
+    @PostMapping("/search/by/name")
+    public ResponseEntity<List<RealEstateDTO>> searchByName(@Valid @RequestBody NameDTO nameDTO) {
+        String name_criteria = nameDTO.getName();
+        List<RealEstate> foundRealEstates = realEstateService.searchByName(name_criteria);
+        List<RealEstateDTO> resultToReturn = new ArrayList<>();
+        foundRealEstates.forEach(realEstate -> resultToReturn.add(realEstateMapper.toDTO(realEstate)));
+        return new ResponseEntity<>(resultToReturn, HttpStatus.CREATED);
+    }
 }

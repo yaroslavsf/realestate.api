@@ -15,4 +15,8 @@ public interface RealEstateService {
     void deleteById(UUID realestateId);
 
     RealEstate update(RealEstate realEstate, UUID realestate_id);
+
+    List<RealEstate> searchByCanton(String cantonCriteria);
+
+    List<RealEstate> searchByName(String nameCriteria);
 }

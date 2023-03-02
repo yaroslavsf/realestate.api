@@ -54,4 +54,14 @@ public class RealEstateServiceImpl implements RealEstateService{
        r.setUser(user);
         return realEstateRepository.save(r);
     }
+
+    @Override
+    public List<RealEstate> searchByCanton(String cantonCriteria) {
+        return realEstateRepository.findByCantonLike(cantonCriteria);
+    }
+
+    @Override
+    public List<RealEstate> searchByName(String nameCriteria) {
+        return realEstateRepository.findByNameLike(nameCriteria);
+    }
 }

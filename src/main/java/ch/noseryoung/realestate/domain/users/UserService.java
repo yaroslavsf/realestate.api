@@ -13,4 +13,6 @@ public interface UserService {
     User findById(UUID id);
 
     boolean userIsAgent(UUID userId);
+
+    List<User> searchByName(String nameCriteria);
 }

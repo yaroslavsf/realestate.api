@@ -67,13 +67,6 @@ public class UserRealEstateController {
 
     @GetMapping("/accept/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
     public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> accept(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
-        //checking
-//        //if the owner is agent
-//        if (!userService.userIsAgent(owner_id)) throw new RuntimeException("");
-//        //if owner has this realestate
-//        if (!userRealEstateService.checkForOwner(owner_id, userRealEstate)) throw new RuntimeException("provided owner is wrong");
-//        //if user was applied for this realestate
-//        if (!userRealEstateService.checkForApplication(userService.findById(user_id), realestate_id)) throw new RuntimeException("provided client is wrong");
         UserRealEstate applicationToReturn = null;
         RealEstate realEstate = realEstateService.findById(realestate_id);
         List<UserRealEstate> applicationsOnRealEstate = realEstate.getUserRealEstates();
@@ -94,13 +87,6 @@ public class UserRealEstateController {
 
     @GetMapping("/decline/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
     public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> decline(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
-        //checking
-//        //if the owner is agent
-//        if (!userService.userIsAgent(owner_id)) throw new RuntimeException("");
-//        //if owner has this realestate
-//        if (!userRealEstateService.checkForOwner(owner_id, userRealEstate)) throw new RuntimeException("provided owner is wrong");
-//        //if user was applied for this realestate
-//        if (!userRealEstateService.checkForApplication(userService.findById(user_id), realestate_id)) throw new RuntimeException("provided client is wrong");
         UserRealEstate applicationToReturn = null;
         RealEstate realEstate = realEstateService.findById(realestate_id);
         List<UserRealEstate> applicationsOnRealEstate = realEstate.getUserRealEstates();

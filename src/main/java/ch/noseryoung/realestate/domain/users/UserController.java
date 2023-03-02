@@ -1,8 +1,11 @@
 package ch.noseryoung.realestate.domain.users;
 
+import ch.noseryoung.realestate.domain.realestate.RealEstate;
+import ch.noseryoung.realestate.domain.realestate.dto.RealEstateDTO;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.dto.UserDTO;
 import ch.noseryoung.realestate.domain.users.dto.UserMapper;
+import ch.noseryoung.realestate.domain.users.dto.filter.NameDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,4 +45,11 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.register(userMapper.fromRegisterDTO(registerUser))), HttpStatus.CREATED);
     }
 
+    @PostMapping("/search/by/name")
+    public ResponseEntity<List<UserDTO>> searchByName(@RequestBody NameDTO nameDTO) {
+        List<User> foundUsers = userService.searchByName(nameDTO.getName());
+        List<UserDTO> resultToReturn = new ArrayList<>();
+        foundUsers.forEach(user -> resultToReturn.add(userMapper.toDTO(user)));
+        return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
+    }
 }

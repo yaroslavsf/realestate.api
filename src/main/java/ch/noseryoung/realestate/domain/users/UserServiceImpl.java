@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService{
         return false;
     }
 
+    @Override
+    public List<User> searchByName(String nameCriteria) {
+        return userRepository.findByNameLike(nameCriteria);
+    }
+
     private boolean checkEmailForAgentPattern(String email, String pattern) {
         Pattern p = Pattern.compile(pattern + "$");
         Matcher matcher = p.matcher(email);
