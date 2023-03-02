@@ -32,7 +32,7 @@ public class UserRealEstateController {
         this.userRealEstateMapper = userRealEstateMapper;
     }
 
-    @GetMapping("/get_all_by_realestate_id/{realestate_id}")
+    @GetMapping("/all/by/{realestate_id}")
     public ResponseEntity<List<UserRealEstateDTO.RetrieveForRealEstate>> retrieveByRealEstateId(@PathVariable(value="realestate_id") UUID id) {
         //map userrealestates to dtos
         List<UserRealEstate> userRealEstates = userRealEstateService.getAllByRealEstateId(id);
@@ -44,7 +44,7 @@ public class UserRealEstateController {
         return new ResponseEntity<>(userRealEstateDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/get_all_by_user_id/{user_id}")
+    @GetMapping("/all/by/{user_id}")
     public ResponseEntity<List<UserRealEstateDTO.RetrieveForUser>> retrieveByUserId(@PathVariable(value="user_id") UUID id) {
         //map userrealestates to dtos
         List<UserRealEstate> userRealEstates = userRealEstateService.getAllByUserId(id);
@@ -56,7 +56,7 @@ public class UserRealEstateController {
         return new ResponseEntity<>(userRealEstateDTOS, HttpStatus.OK);
     }
 
-    @PostMapping("/apply_for/{realestate_id}/by_user/{user_id}")
+    @PostMapping("/apply/{realestate_id}/by/{user_id}")
     public ResponseEntity<UserRealEstateDTO.Create> create(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id){
         //check on rights
         if (userService.userIsAgent(user_id)) throw new RuntimeException("user has no rights as client");
@@ -67,7 +67,7 @@ public class UserRealEstateController {
         return new ResponseEntity<>(userRealEstateMapper.toCreateDTO(userRealEstateService.save(userApply, realEstateApply)) ,HttpStatus.CREATED);
     }
 
-    @GetMapping("/accept/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
+    @GetMapping("/accept/{realestate_id}/by/{owner_id}/for/{user_id}")
     public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> accept(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
         //res
         UserRealEstate applicationToReturn = null;
@@ -90,7 +90,7 @@ public class UserRealEstateController {
     }
 
 
-    @GetMapping("/decline/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
+    @GetMapping("/decline/{realestate_id}/by/{owner_id}/for/{user_id}")
     public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> decline(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
        //res
         UserRealEstate applicationToReturn = null;
