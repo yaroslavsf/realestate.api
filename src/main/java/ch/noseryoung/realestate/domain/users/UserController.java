@@ -30,9 +30,11 @@ public class UserController {
 
     @GetMapping("/get_all")
     public ResponseEntity<List<UserDTO>> retrieveAll() {
+        //map users to dtos
         List<User> users = userService.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
         users.forEach(user -> userDTOS.add(userMapper.toDTO(user)));
+
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
@@ -47,9 +49,11 @@ public class UserController {
 
     @PostMapping("/search/by/name")
     public ResponseEntity<List<UserDTO>> searchByName(@RequestBody NameDTO nameDTO) {
+        //map users to dtos
         List<User> foundUsers = userService.searchByName(nameDTO.getName());
         List<UserDTO> resultToReturn = new ArrayList<>();
         foundUsers.forEach(user -> resultToReturn.add(userMapper.toDTO(user)));
+
         return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
     }
 }

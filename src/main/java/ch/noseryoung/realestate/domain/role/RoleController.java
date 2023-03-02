@@ -35,7 +35,7 @@ public class RoleController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value="id") UUID id){
         roleService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/update")
