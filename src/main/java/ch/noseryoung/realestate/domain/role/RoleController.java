@@ -1,5 +1,7 @@
 package ch.noseryoung.realestate.domain.role;
 
+import ch.noseryoung.realestate.domain.role.dto.RoleDTO;
+import ch.noseryoung.realestate.domain.role.dto.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,34 +14,32 @@ import java.util.UUID;
 @RequestMapping("/role")
 public class RoleController {
     private RoleService roleService;
+    private RoleMapper roleMapper;
 
     @Autowired
-    public RoleController(RoleService roleService) {
+    public RoleController(RoleService roleService, RoleMapper roleMapper) {
         this.roleService = roleService;
+        this.roleMapper = roleMapper;
     }
 
-    @GetMapping("/get_all")
+    @GetMapping("/all")
     public ResponseEntity<List<Role>> retrieveAll() {
         return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_by_id/{id}")
-    public ResponseEntity<Role> retrieveById(@PathVariable(value="id") UUID id) {
+    @GetMapping("/by/{role_id}")
+    public ResponseEntity<Role> retrieveById(@PathVariable(value="role_id") UUID id) {
         return new ResponseEntity<>(roleService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Role> create(@RequestBody Role role) {
-        return new ResponseEntity<>(roleService.save(role), HttpStatus.CREATED);
+    @PostMapping("/")
+    public ResponseEntity<Role> create(@RequestBody RoleDTO role) {
+        return new ResponseEntity<>(roleService.save(roleMapper.fromDTO(role)), HttpStatus.CREATED);
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value="id") UUID id){
+    @DeleteMapping("/{role_id}")
+    public ResponseEntity<Void> delete(@PathVariable(value="role_id") UUID id){
         roleService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Role> replace(@RequestBody Role role) {
-        return new ResponseEntity<>(roleService.update(role), HttpStatus.OK);
-    }
 }

@@ -5,7 +5,6 @@ import ch.noseryoung.realestate.domain.realestate.dto.RealEstateDTO;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.dto.UserDTO;
 import ch.noseryoung.realestate.domain.users.dto.UserMapper;
-import ch.noseryoung.realestate.domain.users.dto.filter.NameDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/get_all")
+    @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> retrieveAll() {
         //map users to dtos
         List<User> users = userService.findAll();
@@ -38,7 +37,7 @@ public class UserController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/get_by_id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserDTO.RetrieveLightlyDressed> retrieveById(@PathVariable(value="id") UUID id) {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.findById(id)), HttpStatus.OK);
     }
@@ -47,10 +46,10 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.register(userMapper.fromRegisterDTO(registerUser))), HttpStatus.CREATED);
     }
 
-    @PostMapping("/search/by/name")
-    public ResponseEntity<List<UserDTO>> searchByName(@RequestBody NameDTO nameDTO) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<UserDTO>> searchByName(@PathVariable(value="name")  String name_criteria) {
         //map users to dtos
-        List<User> foundUsers = userService.searchByName(nameDTO.getName());
+        List<User> foundUsers = userService.searchByName(name_criteria);
         List<UserDTO> resultToReturn = new ArrayList<>();
         foundUsers.forEach(user -> resultToReturn.add(userMapper.toDTO(user)));
 

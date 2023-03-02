@@ -2,13 +2,9 @@ package ch.noseryoung.realestate.domain.realestate;
 
 import ch.noseryoung.realestate.domain.realestate.dto.RealEstateDTO;
 import ch.noseryoung.realestate.domain.realestate.dto.RealEstateMapper;
-import ch.noseryoung.realestate.domain.realestate.dto.filter.CantonDTO;
-import ch.noseryoung.realestate.domain.realestate.dto.filter.NameDTO;
-import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.User;
 import ch.noseryoung.realestate.domain.users.UserService;
 import jakarta.validation.Valid;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +29,7 @@ public class RealEstateController {
         this.realEstateMapper = realEstateMapper;
     }
 
-    @GetMapping("/get_all")
+    @GetMapping("/all")
     public ResponseEntity<List<RealEstateDTO>> retrieveAll() {
         //map list of realestate to dto
         List<RealEstate> realEstates = realEstateService.findAll();
@@ -43,12 +39,12 @@ public class RealEstateController {
         return new ResponseEntity<>(realEstateDTOS , HttpStatus.OK);
     }
 
-    @GetMapping("/get_by_id/{id}")
+    @GetMapping("/by/{id}")
     public ResponseEntity<RealEstateDTO.RetrieveFullyDressed> retrieveById(@PathVariable(value="id") UUID id) {
         return new ResponseEntity<>(realEstateMapper.toRetrieveFullyDressedDTO(realEstateService.findById(id)), HttpStatus.OK);
     }
 
-    @PostMapping("/create/{user_id}")
+    @PostMapping("/by/{user_id}")
     public ResponseEntity<RealEstateDTO.RetrieveFullyDressed> create(@PathVariable(value="user_id") UUID user_id, @Valid @RequestBody RealEstateDTO realEstateCreateDto) {
         //check user on null and on rights
         User user = userService.findById(user_id);
@@ -58,7 +54,7 @@ public class RealEstateController {
         return new ResponseEntity<>(realEstateMapper.toRetrieveFullyDressedDTO(realEstateService.save(realEstateMapper.fromDTO(realEstateCreateDto), user)), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{realestate_id}/by_user/{user_id}")
+    @DeleteMapping("/{realestate_id}/by/{user_id}")
     public ResponseEntity<Void> delete(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id){
         //check owner on rights
         if (!userService.userIsAgent(user_id)) throw new RuntimeException("user has no rights as agent");
@@ -68,7 +64,7 @@ public class RealEstateController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/update/{realestate_id}/by_user/{user_id}")
+    @PutMapping("/{realestate_id}/by/{user_id}")
     public ResponseEntity<RealEstateDTO.RetrieveFullyDressed> replace(@Valid @RequestBody RealEstateDTO realEstateDTO, @PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id) {
         //check owner on rights
         if (!userService.userIsAgent(user_id)) throw new RuntimeException("user has no rights as agent");
@@ -77,10 +73,9 @@ public class RealEstateController {
         return new ResponseEntity<>(realEstateMapper.toRetrieveFullyDressedDTO(realEstateService.update(realEstateMapper.fromDTO(realEstateDTO), realestate_id)), HttpStatus.OK);
     }
 
-    @PostMapping("/search/by/canton")
-    public ResponseEntity<List<RealEstateDTO>> searchByCanton(@Valid @RequestBody CantonDTO cantonDTO) {
+    @GetMapping("/{canton}")
+    public ResponseEntity<List<RealEstateDTO>> searchByCanton(@PathVariable(value="canton") String canton_criteria) {
         //map realestates to dtos
-        String canton_criteria = cantonDTO.getCanton();
         List<RealEstate> foundRealEstates = realEstateService.searchByCanton(canton_criteria);
         List<RealEstateDTO> resultToReturn = new ArrayList<>();
         foundRealEstates.forEach(realEstate -> resultToReturn.add(realEstateMapper.toDTO(realEstate)));
@@ -88,10 +83,9 @@ public class RealEstateController {
         return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
     }
 
-    @PostMapping("/search/by/name")
-    public ResponseEntity<List<RealEstateDTO>> searchByName(@Valid @RequestBody NameDTO nameDTO) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<RealEstateDTO>> searchByName(@PathVariable(value="name")  String name_criteria) {
         //map realestates to dtos
-        String name_criteria = nameDTO.getName();
         List<RealEstate> foundRealEstates = realEstateService.searchByName(name_criteria);
         List<RealEstateDTO> resultToReturn = new ArrayList<>();
         foundRealEstates.forEach(realEstate -> resultToReturn.add(realEstateMapper.toDTO(realEstate)));
