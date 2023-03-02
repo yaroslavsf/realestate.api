@@ -1,5 +1,6 @@
 package ch.noseryoung.realestate.domain.userrealestate;
 
+import ch.noseryoung.realestate.core.audit.Auditable;
 import ch.noseryoung.realestate.domain.enums.RealEstateStatus;
 import ch.noseryoung.realestate.domain.realestate.RealEstate;
 import ch.noseryoung.realestate.domain.users.User;
@@ -7,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 import java.util.UUID;
 
@@ -15,7 +18,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserRealEstate {
+@Audited
+@AuditOverride(forClass = Auditable.class)
+public class UserRealEstate extends Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @Column(name = "userrealestate_id", nullable = false)

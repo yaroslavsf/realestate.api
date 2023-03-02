@@ -1,11 +1,14 @@
 package ch.noseryoung.realestate.domain.realestate;
 
+import ch.noseryoung.realestate.core.audit.Auditable;
 import ch.noseryoung.realestate.domain.userrealestate.UserRealEstate;
 import ch.noseryoung.realestate.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +19,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RealEstate {
+@Audited
+@AuditOverride(forClass = Auditable.class)
+public class RealEstate extends Auditable {
     @Id
     @GeneratedValue(generator = "UUID")
     @Column(name = "realestate_id", nullable = false)
