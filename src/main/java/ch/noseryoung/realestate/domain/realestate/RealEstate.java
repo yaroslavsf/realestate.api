@@ -24,7 +24,7 @@ public class RealEstate {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private double square;
+    private String square;
     @Column(nullable = false)
     private String canton;
     @Column(nullable = false)
