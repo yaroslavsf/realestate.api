@@ -1,5 +1,7 @@
 package ch.noseryoung.realestate.domain.role;
 
+import ch.noseryoung.realestate.domain.role.dto.RoleDTO;
+import ch.noseryoung.realestate.domain.role.dto.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,12 @@ import java.util.UUID;
 @RequestMapping("/role")
 public class RoleController {
     private RoleService roleService;
+    private RoleMapper roleMapper;
 
     @Autowired
-    public RoleController(RoleService roleService) {
+    public RoleController(RoleService roleService, RoleMapper roleMapper) {
         this.roleService = roleService;
+        this.roleMapper = roleMapper;
     }
 
     @GetMapping("/all")
@@ -29,8 +33,8 @@ public class RoleController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Role> create(@RequestBody Role role) {
-        return new ResponseEntity<>(roleService.save(role), HttpStatus.CREATED);
+    public ResponseEntity<Role> create(@RequestBody RoleDTO role) {
+        return new ResponseEntity<>(roleService.save(roleMapper.fromDTO(role)), HttpStatus.CREATED);
     }
     @DeleteMapping("/{role_id}")
     public ResponseEntity<Void> delete(@PathVariable(value="role_id") UUID id){

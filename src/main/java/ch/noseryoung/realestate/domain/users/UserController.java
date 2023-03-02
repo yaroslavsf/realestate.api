@@ -5,7 +5,6 @@ import ch.noseryoung.realestate.domain.realestate.dto.RealEstateDTO;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.users.dto.UserDTO;
 import ch.noseryoung.realestate.domain.users.dto.UserMapper;
-import ch.noseryoung.realestate.domain.users.dto.filter.NameDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
