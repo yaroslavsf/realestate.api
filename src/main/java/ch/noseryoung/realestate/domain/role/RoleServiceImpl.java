@@ -1,5 +1,7 @@
 package ch.noseryoung.realestate.domain.role;
 
+import ch.noseryoung.realestate.core.exception.errors.ErrorCode;
+import ch.noseryoung.realestate.core.exception.exceptions.CustomNoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public Role findById(UUID id) {
         Optional<Role> role =  roleRepository.findById(id);
-        if (!role.isPresent()) throw new NoSuchElementException();
+        if (!role.isPresent()) throw new CustomNoSuchElementException(ErrorCode.ERROR_10000, "role with id: " + id + "not found", null);
         Role r = role.get();
         return r;
     }
