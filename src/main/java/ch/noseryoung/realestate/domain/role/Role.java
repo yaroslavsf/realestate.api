@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
 
 import java.util.UUID;
 
@@ -15,8 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Audited
-@AuditOverride(forClass = Auditable.class)
 public class Role extends Auditable {
     @Id
     @GeneratedValue(generator = "UUID")

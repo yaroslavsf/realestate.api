@@ -7,14 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing(auditorAwareRef="auditorAware")
-@SpringBootApplication
-public class RealestateApplication {
 
+@SpringBootApplication
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+public class RealestateApplication {
     @Bean
     public AuditorAware<String> auditorAware() {
         return new SecurityAuditorAware();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(RealestateApplication.class, args);
     }
