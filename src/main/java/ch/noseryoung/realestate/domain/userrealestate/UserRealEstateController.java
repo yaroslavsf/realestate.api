@@ -1,5 +1,6 @@
 package ch.noseryoung.realestate.domain.userrealestate;
 
+import ch.noseryoung.realestate.domain.enums.RealEstateStatus;
 import ch.noseryoung.realestate.domain.realestate.RealEstate;
 import ch.noseryoung.realestate.domain.realestate.RealEstateService;
 import ch.noseryoung.realestate.domain.userrealestate.dto.UserRealEstateDTO;
@@ -66,17 +67,52 @@ public class UserRealEstateController {
 
     @GetMapping("/accept/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
     public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> accept(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
-//TODO: accept the application and decline all other on this realestate
-
         //checking
-//        UserRealEstate userRealEstate = userRealEstateService.findById();
+//        //if the owner is agent
+//        if (!userService.userIsAgent(owner_id)) throw new RuntimeException("");
+//        //if owner has this realestate
 //        if (!userRealEstateService.checkForOwner(owner_id, userRealEstate)) throw new RuntimeException("provided owner is wrong");
+//        //if user was applied for this realestate
 //        if (!userRealEstateService.checkForApplication(userService.findById(user_id), realestate_id)) throw new RuntimeException("provided client is wrong");
+        UserRealEstate applicationToReturn = null;
+        RealEstate realEstate = realEstateService.findById(realestate_id);
+        List<UserRealEstate> applicationsOnRealEstate = realEstate.getUserRealEstates();
+        User userToAccept = userService.findById(user_id);
+        for (var app: applicationsOnRealEstate) {
+            if (app.getUser().equals(userToAccept)) {
+                app.setStatus(RealEstateStatus.ACCEPTED);
+                applicationToReturn = app;
+            } else {
+                app.setStatus(RealEstateStatus.DECLINED);
+            }
+        }
 
-        //declining all other applications
-//        userRealEstateService.declineAllBesides(realEstateService.findById(realestate_id), userService.findById(user_id));
-
-        return new ResponseEntity<>(userRealEstateMapper.toRetrieveForRealEstate(userRealEstateService.save(userRealEstate)) ,HttpStatus.OK);
+        if (applicationToReturn == null) throw new RuntimeException("error while accepting application");
+        return new ResponseEntity<>(userRealEstateMapper.toRetrieveForRealEstate(userRealEstateService.save(applicationToReturn)) ,HttpStatus.OK);
     }
 
+
+    @GetMapping("/decline/{realestate_id}/by_owner/{owner_id}/for_user/{user_id}")
+    public ResponseEntity<UserRealEstateDTO.RetrieveForRealEstate> decline(@PathVariable(value="realestate_id") UUID realestate_id, @PathVariable(value="user_id") UUID user_id, @PathVariable(value="owner_id") UUID owner_id){
+        //checking
+//        //if the owner is agent
+//        if (!userService.userIsAgent(owner_id)) throw new RuntimeException("");
+//        //if owner has this realestate
+//        if (!userRealEstateService.checkForOwner(owner_id, userRealEstate)) throw new RuntimeException("provided owner is wrong");
+//        //if user was applied for this realestate
+//        if (!userRealEstateService.checkForApplication(userService.findById(user_id), realestate_id)) throw new RuntimeException("provided client is wrong");
+        UserRealEstate applicationToReturn = null;
+        RealEstate realEstate = realEstateService.findById(realestate_id);
+        List<UserRealEstate> applicationsOnRealEstate = realEstate.getUserRealEstates();
+        User userToDecline = userService.findById(user_id);
+        for (var app: applicationsOnRealEstate) {
+            if (app.getUser().equals(userToDecline)) {
+                app.setStatus(RealEstateStatus.DECLINED);
+                applicationToReturn = app;
+            }
+        }
+
+        if (applicationToReturn == null) throw new RuntimeException("error while declining application");
+        return new ResponseEntity<>(userRealEstateMapper.toRetrieveForRealEstate(userRealEstateService.save(applicationToReturn)) ,HttpStatus.OK);
+    }
 }
