@@ -1,6 +1,6 @@
 package ch.noseryoung.realestate.domain.role;
 
-import ch.noseryoung.realestate.core.audit.Auditable;
+import ch.noseryoung.realestate.core.generic.Auditable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

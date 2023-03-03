@@ -1,8 +1,30 @@
+//fw
+buildscript {
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:9.8.1'
+    }
+}
+
 plugins {
     id 'java'
     id 'war'
     id 'org.springframework.boot' version '3.0.3'
+    //fw
+    id "org.flywaydb.flyway" version "9.8.1"
+
     id 'io.spring.dependency-management' version '1.1.0'
+}
+
+//fw
+flyway {
+    validateMigrationNaming = true
+    baselineOnMigrate = true
+    cleanDisabled=false
+//    driver='org.postgresql.Driver'
+    url = 'jdbc:postgresql://localhost:5432/realestate'
+    user = 'postgres'
+    password = 'postgres'
+    locations = ['classpath:migrations']
 }
 
 group = 'ch.noseryoung'
@@ -39,8 +61,6 @@ dependencies {
     //validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    //audit
-//    implementation 'org.hibernate.orm:hibernate-envers:6.2.0.CR2'
 }
 
 tasks.named('test') {

@@ -1,6 +1,6 @@
 package ch.noseryoung.realestate.domain.users;
 
-import ch.noseryoung.realestate.core.audit.Auditable;
+import ch.noseryoung.realestate.core.generic.Auditable;
 import ch.noseryoung.realestate.domain.realestate.RealEstate;
 import ch.noseryoung.realestate.domain.role.Role;
 import ch.noseryoung.realestate.domain.userrealestate.UserRealEstate;
