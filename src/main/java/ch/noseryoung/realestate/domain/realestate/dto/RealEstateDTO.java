@@ -51,7 +51,7 @@ public class RealEstateDTO {
     @Schema(name = "RealEstateDTO.RetrieveFullyDressed")
     public static class RetrieveFullyDressed extends RealEstateDTO {
 
-        protected UserDTO user;
+        protected UserDTO.WithUUID user;
         protected List<UserRealEstateDTO.RetrieveForRealEstate> userRealEstates;
 
     }

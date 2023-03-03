@@ -28,11 +28,11 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDTO>> retrieveAll() {
+    public ResponseEntity<List<UserDTO.WithUUID>> retrieveAll() {
         //map users to dtos
         List<User> users = userService.findAll();
-        List<UserDTO> userDTOS = new ArrayList<>();
-        users.forEach(user -> userDTOS.add(userMapper.toDTO(user)));
+        List<UserDTO.WithUUID> userDTOS = new ArrayList<>();
+        users.forEach(user -> userDTOS.add(userMapper.toDTOWithUUID(user)));
 
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
@@ -46,12 +46,12 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toRetrieveLightlyDressedDTO(userService.register(userMapper.fromRegisterDTO(registerUser))), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<List<UserDTO>> searchByName(@PathVariable(value="name")  String name_criteria) {
+    @GetMapping("search/{name}")
+    public ResponseEntity<List<UserDTO.WithUUID>> searchByName(@PathVariable(value="name")  String name_criteria) {
         //map users to dtos
         List<User> foundUsers = userService.searchByName(name_criteria);
-        List<UserDTO> resultToReturn = new ArrayList<>();
-        foundUsers.forEach(user -> resultToReturn.add(userMapper.toDTO(user)));
+        List<UserDTO.WithUUID> resultToReturn = new ArrayList<>();
+        foundUsers.forEach(user -> resultToReturn.add(userMapper.toDTOWithUUID(user)));
 
         return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
     }

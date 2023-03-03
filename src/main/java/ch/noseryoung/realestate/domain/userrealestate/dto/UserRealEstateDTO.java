@@ -28,7 +28,7 @@ public class UserRealEstateDTO {
     @Setter
     @Schema(name = "UserDTO.Create")
     public static class Create extends UserRealEstateDTO {
-        private UserDTO user;
+        private UserDTO.WithUUID user;
         private RealEstateDTO realEstate;
     }
 
@@ -42,7 +42,7 @@ public class UserRealEstateDTO {
     @Setter
     @Schema(name = "UserDTO.RetrieveForRealEstate")
     public static class RetrieveForRealEstate extends UserRealEstateDTO {
-        private UserDTO user;
+        private UserDTO.WithUUID user;
     }
 
 
