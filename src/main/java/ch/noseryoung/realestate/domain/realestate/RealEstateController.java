@@ -73,7 +73,7 @@ public class RealEstateController {
         return new ResponseEntity<>(realEstateMapper.toRetrieveFullyDressedDTO(realEstateService.update(realEstateMapper.fromDTO(realEstateDTO), realestate_id)), HttpStatus.OK);
     }
 
-    @GetMapping("/{canton}")
+    @GetMapping("/search/{canton}")
     public ResponseEntity<List<RealEstateDTO>> searchByCanton(@PathVariable(value="canton") String canton_criteria) {
         //map realestates to dtos
         List<RealEstate> foundRealEstates = realEstateService.searchByCanton(canton_criteria);
@@ -83,7 +83,7 @@ public class RealEstateController {
         return new ResponseEntity<>(resultToReturn, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/search/{name}")
     public ResponseEntity<List<RealEstateDTO>> searchByName(@PathVariable(value="name")  String name_criteria) {
         //map realestates to dtos
         List<RealEstate> foundRealEstates = realEstateService.searchByName(name_criteria);

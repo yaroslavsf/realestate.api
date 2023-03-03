@@ -10,4 +10,6 @@ public interface UserMapper {
     User fromRegisterDTO(UserDTO.Register user);
     UserDTO.RetrieveLightlyDressed toRetrieveLightlyDressedDTO(User user);
     UserDTO toDTO(User user);
+    UserDTO.WithUUID toDTOWithUUID(User user);
+
 }

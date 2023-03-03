@@ -1,6 +1,6 @@
 package ch.noseryoung.realestate.domain.realestate;
 
-import ch.noseryoung.realestate.core.audit.Auditable;
+import ch.noseryoung.realestate.core.generic.Auditable;
 import ch.noseryoung.realestate.domain.userrealestate.UserRealEstate;
 import ch.noseryoung.realestate.domain.users.User;
 import jakarta.persistence.*;

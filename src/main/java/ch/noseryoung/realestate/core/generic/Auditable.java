@@ -1,4 +1,4 @@
-package ch.noseryoung.realestate.core.audit;
+package ch.noseryoung.realestate.core.generic;
 
 
 import jakarta.persistence.*;
